@@ -29,7 +29,7 @@ class Task < ApplicationRecord
         Task.where("position > ? AND position <= ?", self.position_was, self.position).map do |t|
           t.update_column(:position, t.position - 1)
         end
-        self.position = Task.where("position > ? AND position <= ?", self.position_was, self.position).maximum(:position) + 1
+        self.position = Task.where("position >= ? AND position < ?", self.position_was, self.position).maximum(:position) + 1
       else
         Task.where("position >= ? AND position < ?", self.position, self.position_was).map do |t|
           t.update_column(:position, t.position + 1)

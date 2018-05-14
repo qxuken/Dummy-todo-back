@@ -3,7 +3,7 @@ class Api::TasksController < ApiController
 
   # GET /tasks
   def index
-    @tasks = Task.all
+    @tasks = Task.all.order(position: :asc)
 
     render json: @tasks
   end

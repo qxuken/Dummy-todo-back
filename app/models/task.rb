@@ -6,6 +6,10 @@ class Task < ApplicationRecord
 
   enum significance: [ :unimportant, :regular, :important ]
 
+  def self.reindex_positions
+    Task.all.order(position: :asc).each_with_index.map{|x,i| x.update_column(:position, i)}
+  end
+
   private
 
   def set_position

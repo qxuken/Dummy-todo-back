@@ -47,6 +47,6 @@ class Api::TasksController < ApiController
 
     # Only allow a trusted parameter "white list" through.
     def task_params
-      params.require(:task).permit(:text, :completed)
+      params.require(:task).permit(:text, :position, :significance, :completed)
     end
 end

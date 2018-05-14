@@ -36,7 +36,7 @@ class Api::TasksController < ApiController
   # DELETE /tasks/1
   def destroy
     @task.destroy
-    render json: { success: true }, status: :deleted
+    render json: { success: true }
   end
 
   private

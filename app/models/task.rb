@@ -1,6 +1,7 @@
 class Task < ApplicationRecord
   before_create :set_position
   before_update :update_positions
+  after_destroy :reindex_positions
   
   validates :text, presence: true, length: { minimum: 0, maximum: 120 }
 
@@ -11,6 +12,10 @@ class Task < ApplicationRecord
   end
 
   private
+  
+  def reindex_positions
+    Task.reindex_positions
+  end
 
   def set_position
     if self.position 

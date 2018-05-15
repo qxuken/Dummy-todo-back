@@ -14,7 +14,7 @@ class Mutations::Task::UpdateTask < Mutations::BaseMutation
     task = ::Task.find(id)
     task.text = text if text
     task.position = position if position
-    task.completed = completed if completed
+    task.completed = completed if completed.present?
     task.significance = significance if significance
     if task.save
       {

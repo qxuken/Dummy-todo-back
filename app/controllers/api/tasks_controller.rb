@@ -44,6 +44,7 @@ class Api::TasksController < ApiController
     # Use callbacks to share common setup or constraints between actions.
     def set_task
       @task = Task.find(params[:id])
+      authentication_error unless @task.applicant == current_applicant
     end
 
     # Only allow a trusted parameter "white list" through.

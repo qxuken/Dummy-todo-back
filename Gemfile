@@ -61,3 +61,4 @@ gem 'graphiql-rails', '~> 1.4.10', group: :development
 
 gem 'positionable'
 gem 'devise'
+gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'

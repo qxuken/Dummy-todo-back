@@ -4,7 +4,7 @@ class Applicant < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   
-  after_create :update_access_token!
+  after_create :update_access_token!, :generate_tasks!
 
   has_many :tasks, dependent: :destroy
 
@@ -13,6 +13,13 @@ class Applicant < ApplicationRecord
   def update_access_token!
     self.access_token = "#{self.id}:#{Devise.friendly_token}"
     save
+  end
+
+  def generate_tasks!
+    20.times do 
+      Task.create(applicant: self, text: ::Faker::Lovecraft.sentence, significance: [ :unimportant, :regular, :important ].sample, completed: [true, false].sample )
+    end
+    
   end
 
 end

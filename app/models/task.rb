@@ -1,6 +1,6 @@
 class Task < ApplicationRecord
   belongs_to :applicant, optional: true 
-  is_positionable order: :desc, scope: :applicant
+  is_positionable scope: :applicant
   attr_accessor :new_position
 
   validates :text, presence: true, length: { minimum: 0, maximum: 120 }

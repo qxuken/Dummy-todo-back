@@ -58,3 +58,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "graphql", '~> 1.8.0.pre11'
 gem 'graphql-batch', '~> 0.3.9'
 gem 'graphiql-rails', '~> 1.4.10', group: :development
+
+gem 'positionable'
+gem 'devise'

@@ -1,8 +1,8 @@
 class Task < ApplicationRecord
-  before_create :set_position
-  before_update :update_positions
-  after_destroy :reindex_positions
-  
+  belongs_to :applicant, optional: true 
+  is_positionable order: :desc, scope: :applicant
+  attr_accessor :new_position
+
   validates :text, presence: true, length: { minimum: 0, maximum: 120 }
 
   enum significance: [ :unimportant, :regular, :important ]
@@ -15,32 +15,5 @@ class Task < ApplicationRecord
   
   def reindex_positions
     Task.reindex_positions
-  end
-
-  def set_position
-    if self.position 
-      Task.where("position >= ?", self.position).map do |t|
-        t.update_column(:position, t.position + 1)
-      end
-    else
-      last_position = Task.maximum(:position) || -1
-      self.position = last_position + 1
-    end
-  end
-
-  def update_positions
-    if self.position_changed?
-      if self.position > self.position_was
-        Task.where("position > ? AND position <= ?", self.position_was, self.position).map do |t|
-          t.update_column(:position, t.position - 1)
-        end
-        self.position = Task.where("position >= ? AND position < ?", self.position_was, self.position).maximum(:position) + 1
-      else
-        Task.where("position >= ? AND position < ?", self.position, self.position_was).map do |t|
-          t.update_column(:position, t.position + 1)
-        end
-        self.position = Task.where("position > ? AND position <= ?", self.position, self.position_was).minimum(:position) - 1
-      end
-    end
   end
 end

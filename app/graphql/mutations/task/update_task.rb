@@ -13,7 +13,7 @@ class Mutations::Task::UpdateTask < Mutations::BaseMutation
   def resolve(id:, text:, position:, completed:, significance:)
     task = ::Task.find(id)
     task.text = text if text
-    task.position = position if position
+    task.insert_at(position) if position && !task.last? && !task.first?
     task.completed = completed if completed != nil
     task.significance = significance if significance
     if task.save

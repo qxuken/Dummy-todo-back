@@ -18,7 +18,7 @@ class Api::TasksController < ApiController
     @task.applicant = current_applicant
     if @task.save
       @task.move_to(params[:task][:new_position])if params[:task][:new_position]
-      render json: @task, status: :created, location: @task
+      render json: @task, status: :created
     else
       render json: @task.errors, status: :unprocessable_entity
     end

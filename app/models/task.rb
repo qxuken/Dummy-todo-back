@@ -4,7 +4,8 @@ class Task < ApplicationRecord
 
   attr_accessor :new_position
   after_save :change_position
-
+   
+  
   validates :text, presence: true, length: { minimum: 0, maximum: 120 }
 
   enum significance: [ :unimportant, :regular, :important ]

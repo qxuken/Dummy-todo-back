@@ -1,6 +1,7 @@
 class Task < ApplicationRecord
   belongs_to :applicant, optional: true 
   is_positionable scope: :applicant
+
   attr_accessor :new_position
   after_save :change_position
 
@@ -13,7 +14,7 @@ class Task < ApplicationRecord
   end
 
   private
-
+  
   def change_position
     if self.new_position
       self.move_to(self.new_position)

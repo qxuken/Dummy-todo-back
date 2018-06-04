@@ -17,7 +17,6 @@ class Api::TasksController < ApiController
     @task = Task.new(task_params)
     @task.applicant = current_applicant
     if @task.save
-      @task.move_to(params[:task][:new_position])if params[:task][:new_position]
       render json: @task, status: :created
     else
       render json: @task.errors, status: :unprocessable_entity
@@ -27,7 +26,6 @@ class Api::TasksController < ApiController
   # PATCH/PUT /tasks/1
   def update
     if @task.update(task_params)
-      @task.move_to(params[:task][:new_position])if params[:task][:new_position]
       render json: @task
     else
       render json: @task.errors, status: :unprocessable_entity
@@ -49,6 +47,6 @@ class Api::TasksController < ApiController
 
     # Only allow a trusted parameter "white list" through.
     def task_params
-      params.require(:task).permit(:text, :new_position, :significance, :completed)
+      params.permit(:text, :new_position, :significance, :completed)
     end
 end
